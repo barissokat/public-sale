@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\OfferWasGiven;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,7 @@ class Product extends Model
 {
     use HasFactory;
 
-     /**
+    /**
      * Don't auto-apply mass assignment protection.
      *
      * @var array
@@ -39,7 +40,6 @@ class Product extends Model
         return $this->hasMany(Offer::class);
     }
 
-
     /**
      * Give offer a user to the current product.
      *
@@ -51,9 +51,11 @@ class Product extends Model
         $offer = Offer::where([['user_id', auth()->id()], ['product_id', $this->id]])->first();
 
         if ($offer) {
+            auth()->user()->increaseCredit($offer->price);
             $offer->update(['price' => $price]);
+            event(new OfferWasGiven($offer));
         } else {
-            $this->offers()->create([
+            $offer = $this->offers()->create([
                 'user_id' => auth()->user()->id,
                 'price' => $price,
             ]);

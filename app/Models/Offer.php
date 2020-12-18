@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\OfferWasGiven;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,18 @@ class Offer extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($offer) {
+            event(new OfferWasGiven($offer));
+        });
+    }
 
     /**
      * Get the user associated with the offer.
