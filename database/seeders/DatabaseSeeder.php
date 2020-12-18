@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
         ]);
 
-        \App\Models\Product::factory(10)->create();
+        \App\Models\Product::factory(9)->create();
         \App\Models\User::factory()->create(['role_id' => 1]);
-        \App\Models\User::factory()->create(['role_id' => 2]);
+        \App\Models\User::factory(2)->create(['role_id' => 2]);
     }
 }

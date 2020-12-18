@@ -23,7 +23,8 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
-            'price' => $this->faker->numberBetween($min = 1000, $max = 9000),
+            'image_path' => 'images/Wy7KMsnNF1ttyW3woqpAKpzQrAtjjjMM5jkZL0OP.jpg',
+            'price' => $this->faker->numberBetween($min = 100, $max = 900),
             'due_date' => $this->faker->date($format = '2021-m-d H:i:s'),
         ];
     }

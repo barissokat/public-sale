@@ -14,13 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::loginUsingId(2);
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\ProductOfferController::class, 'index'])->name('home');
 
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products');
 Route::get('/products/create', [App\Http\Controllers\ProductController::class, 'create'])->name('products.create');
@@ -29,3 +31,6 @@ Route::get('/products/{product}', [App\Http\Controllers\ProductController::class
 Route::get('/products/{product}/edit', [App\Http\Controllers\ProductController::class, 'edit'])->name('products.edit');
 Route::patch('/products/{product}', [App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
 Route::delete('/products/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
+
+Route::post('products/{product}/offers', [App\Http\Controllers\ProductOfferController::class, 'store'])->name('products.offer.store');
+
