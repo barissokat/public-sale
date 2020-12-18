@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::loginUsingId(2);
+Auth::loginUsingId(1);
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,4 +33,13 @@ Route::patch('/products/{product}', [App\Http\Controllers\ProductController::cla
 Route::delete('/products/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
 
 Route::post('products/{product}/offers', [App\Http\Controllers\ProductOfferController::class, 'store'])->name('products.offer.store');
+
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => 'admin',
+    'namespace' => 'Admin',
+], function () {
+    Route::get('offers', [App\Http\Controllers\Admin\ProductOfferController::class, 'index'])->name('offers');
+    Route::get('offers/{offer}', [App\Http\Controllers\Admin\ProductOfferController::class, 'show'])->name('offers.show');
+});
 

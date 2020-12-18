@@ -9,20 +9,20 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">İsim</th>
-                        <th scope="col">Başlangıç Fiyatı</th>
-                        <th scope="col">Son Tarih</th>
+                        <th scope="col">Kullanıcı</th>
+                        <th scope="col">Ürün</th>
+                        <th scope="col">Teklif</th>
                         <th scope="col">İşlemler</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($products as $product)
+                    @foreach ($offers as $offer)
                     <tr>
-                        <th scope="row">{{ $product->id }}</th>
-                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->price }}</td>
-                        <td>{{ $product->due_date }}</td>
-                        <td><a href="{{ route('products.show', $product) }}" class="btn btn-primary">Göster</a></td>
+                        <th scope="row">{{ $offer->id }}</th>
+                        <td>{{ $offer->product->name }}</td>
+                        <td>{{ $offer->user->name }}</td>
+                        <td>{{ $offer->price }}</td>
+                        <td><a href="{{ route('offers.show', $offer) }}" class="btn btn-primary">Bitir</a></td>
                     </tr>
                     @endforeach
                 </tbody>
